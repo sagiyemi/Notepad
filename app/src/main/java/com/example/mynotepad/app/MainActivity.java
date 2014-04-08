@@ -11,44 +11,65 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ListActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class MainActivity extends ListActivity implements AdapterView.OnItemClickListener {
     private ArrayList<Note> notesList;
-    private Button addNewNoteButton;
+    private final int EXISTINGNOTE = 1;
+    private final int NEWNOTE = 2;
+    private NoteAdapter adapter;
+    private Note currentNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_list);
 
-        NotepadApplication notepadApplication = (NotepadApplication) getApplication();
-        notesList = notepadApplication.getNotesList();
+        notesList = new ArrayList<Note>();
+        initArrayWithSomething();
 
         ListView notesListView = getListView();
         notesListView.setOnItemClickListener(this);
 
-        addNewNoteButton = (Button) findViewById(R.id.addNewNoteButton);
-        addNewNoteButton.setOnClickListener(this);
+        Button addNewNoteButton = (Button) findViewById(R.id.addNewNoteButton);
+        addNewNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
+                intent.putExtra(EditNoteActivity.ISNEWNOTE, true);
+                startActivityForResult(intent, NEWNOTE);
+            }
+        });
+        adapter = new NoteAdapter(this, R.layout.title_row, notesList);
+        setListAdapter(adapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setListAdapter(new NoteAdapter(this, R.layout.title_row, notesList));
-    }
-
-    // click on one of the notes
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
-        intent.putExtra("index", i);
-        startActivity(intent);
+        intent.putExtra(EditNoteActivity.ISNEWNOTE, false);
+        currentNote = notesList.get(i);
+        intent.putExtra(EditNoteActivity.NOTE, currentNote);
+        startActivityForResult(intent, EXISTINGNOTE);
     }
 
-    // click on add new note button
     @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
-        intent.putExtra("index", NotepadApplication.NEWNOTE);
-        startActivity(intent);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && (data.getExtras().getBoolean(EditNoteActivity.WASSAVED))) {
+            if (requestCode == EXISTINGNOTE) {
+                Note returnedNote = (Note)data.getExtras().getSerializable(EditNoteActivity.NOTE);
+                currentNote.setSubject(returnedNote.getSubject());
+                currentNote.setContent(returnedNote.getContent());
+            } else if (requestCode == NEWNOTE) {
+                notesList.add((Note)data.getExtras().getSerializable(EditNoteActivity.NOTE));
+            }
+        adapter.notifyDataSetChanged();
+        }
     }
+
+    private void initArrayWithSomething() {
+        notesList.add(new Note("first Title", "first Content"));
+        notesList.add(new Note("second Title", "second Content"));
+        notesList.add(new Note("third Title", "third Content"));
+    }
+
 }

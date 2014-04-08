@@ -1,9 +1,11 @@
 package com.example.mynotepad.app;
 
+import java.io.Serializable;
+
 /**
  * Created by amit_gueta on 4/8/14.
  */
-public class Note {
+public class Note implements Serializable{
     private String subject;
     private String content;
 

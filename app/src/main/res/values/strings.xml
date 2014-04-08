@@ -10,5 +10,6 @@
     <string name="save">Save</string>
     <string name="note_subject">Note Subject</string>
     <string name="note_content">Note Content</string>
+    <string name="plusSign">+</string>
 
 </resources>
