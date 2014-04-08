@@ -13,7 +13,7 @@ public class Note {
     }
 
     public String getSubject() {
-        return this.subject;
+        return subject;
     }
 
     public void setSubject(String subject) {
@@ -21,11 +21,10 @@ public class Note {
     }
 
     public String getContent() {
-        return this.content;
+        return content;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
-
 }
