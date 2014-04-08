@@ -88,12 +88,12 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemClic
         mNotesList.add(new Note("first Title", "first Content"));
         mNotesList.add(new Note("second Title", "second Content"));
         mNotesList.add(new Note("third Title", "third Content"));
-        mNotesList.add(new Note("first Title", "first Content"));
-        mNotesList.add(new Note("second Title", "second Content"));
-        mNotesList.add(new Note("third Title", "third Content"));
-        mNotesList.add(new Note("first Title", "first Content"));
-        mNotesList.add(new Note("second Title", "second Content"));
-        mNotesList.add(new Note("third Title", "third Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("third Title", "third Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("third Title", "third Content"));
 //        mNotesList.add(new Note("first Title", "first Content"));
 //        mNotesList.add(new Note("second Title", "second Content"));
 //        mNotesList.add(new Note("first Title", "first Content"));
