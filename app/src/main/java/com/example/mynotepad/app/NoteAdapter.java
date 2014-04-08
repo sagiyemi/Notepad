@@ -14,27 +14,32 @@ import java.util.ArrayList;
  */
 public class NoteAdapter extends ArrayAdapter<Note> {
 
-    private Context context;
+    private Context mContext;
 
-    public NoteAdapter(Context context, int textViewResourceId, ArrayList<Note> notesList) {
-        super(context, textViewResourceId, notesList);
-        this.context = context;
+    public NoteAdapter(Context context, int listItemId, ArrayList<Note> notesList) {
+        super(context, listItemId, notesList);
+        this.mContext = context;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
+    public View getView(int position, View view, ViewGroup parent) {
+
+        // TODO- http://www.piwai.info/android-adapter-good-practices/#ViewHolder-Pattern
+        // TODO- http://www.piwai.info/android-adapter-good-practices/#Tag-with-id
+
+        // If it's a new row, never been created so far
         if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.title_row, null);
+
+            // Inflate the new row
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.item_list_note, null);
         }
+
         Note note = getItem(position);
-        if (note!=null) {
-            TextView itemView = (TextView) view.findViewById(R.id.titleText);
-            if (itemView != null) {
-                itemView.setText(note.getSubject());
-            }
-        }
+
+        TextView itemView = (TextView) view.findViewById(R.id.row_subject);
+        itemView.setText(note.getSubject());
+
         return view;
     }
 }

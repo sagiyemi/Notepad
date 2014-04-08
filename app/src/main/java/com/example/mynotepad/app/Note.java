@@ -5,28 +5,26 @@ import java.io.Serializable;
 /**
  * Created by amit_gueta on 4/8/14.
  */
-public class Note implements Serializable{
-    private String subject;
-    private String content;
+public class Note implements Serializable {
+    private String mSubject;
+    private String mContent;
 
     public Note(String subject, String content) {
-        this.subject = subject;
-        this.content = content;
+        this.mSubject = subject;
+        this.mContent = content;
     }
 
-    public String getSubject() {
-        return subject;
-    }
+    public String getSubject() { return mSubject; }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setSubject(String Subject) {
+        this.mSubject = Subject;
     }
 
     public String getContent() {
-        return content;
+        return mContent;
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.mContent = content;
     }
 }

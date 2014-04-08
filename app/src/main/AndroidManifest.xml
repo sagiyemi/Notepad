@@ -18,7 +18,7 @@
         </activity>
         <activity
             android:name="com.example.mynotepad.app.EditNoteActivity"
-            android:label="@string/title_activity_edit_note"></activity>
+            android:label="@string/title_activity_edit_note"/>
     </application>
 
 </manifest>

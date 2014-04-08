@@ -1,14 +1,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:layout_gravity="bottom">
 
 
     <EditText
         android:hint="@string/note_subject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editSubject" />
+        android:id="@+id/edit_subject" />
 
     <EditText
         android:hint="@string/note_content"
@@ -16,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/editContent" />
+        android:id="@+id/edit_content" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -29,13 +31,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@android:string/cancel"
-            android:id="@+id/cancelButton" />
+            android:id="@+id/cancel_button" />
 
         <Button
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+
             android:text="@string/save"
-            android:id="@+id/saveButton" />
+            android:id="@+id/save_button" />
     </LinearLayout>
 </LinearLayout>

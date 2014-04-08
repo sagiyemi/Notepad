@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">My Notepad</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="note_application">Note Application</string>
     <string name="title_activity_edit_note">Edit Note</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-    <string name="note_subject">Note Subject</string>
+    <string name="note_subject">Enter header here dsfg dsgsd gs </string>
     <string name="note_content">Note Content</string>
-    <string name="plusSign">+</string>
+    <string name="plus_sign">+</string>
 
 </resources>

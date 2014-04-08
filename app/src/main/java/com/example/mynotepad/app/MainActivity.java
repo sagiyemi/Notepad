@@ -12,64 +12,100 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ListActivity implements AdapterView.OnItemClickListener {
-    private ArrayList<Note> notesList;
-    private final int EXISTINGNOTE = 1;
-    private final int NEWNOTE = 2;
-    private NoteAdapter adapter;
-    private Note currentNote;
+    private final int EXISTING_NOTE = 1;
+    private final int NEW_NOTE = 2;
+
+    private ArrayList<Note> mNotesList;
+    private NoteAdapter mAdapter;
+    private Note mCurrentNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.note_list);
+        setContentView(R.layout.activity_main);
 
-        notesList = new ArrayList<Note>();
+        mNotesList = new ArrayList<Note>();
         initArrayWithSomething();
 
         ListView notesListView = getListView();
         notesListView.setOnItemClickListener(this);
 
-        Button addNewNoteButton = (Button) findViewById(R.id.addNewNoteButton);
+        Button addNewNoteButton = (Button) findViewById(R.id.activity_main_plus);
         addNewNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
-                intent.putExtra(EditNoteActivity.ISNEWNOTE, true);
-                startActivityForResult(intent, NEWNOTE);
+                Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
+                intent.putExtra(EditNoteActivity.IS_NEW_NOTE, true);
+                startActivityForResult(intent, NEW_NOTE);
             }
         });
-        adapter = new NoteAdapter(this, R.layout.title_row, notesList);
-        setListAdapter(adapter);
+
+        mAdapter = new NoteAdapter(this, R.layout.item_list_note, mNotesList);
+        setListAdapter(mAdapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
-        intent.putExtra(EditNoteActivity.ISNEWNOTE, false);
-        currentNote = notesList.get(i);
-        intent.putExtra(EditNoteActivity.NOTE, currentNote);
-        startActivityForResult(intent, EXISTINGNOTE);
+        intent.putExtra(EditNoteActivity.IS_NEW_NOTE, false);
+
+        mCurrentNote = mNotesList.get(i);
+        intent.putExtra(EditNoteActivity.NOTE, mCurrentNote);
+
+        startActivityForResult(intent, EXISTING_NOTE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && (data.getExtras().getBoolean(EditNoteActivity.WASSAVED))) {
-            if (requestCode == EXISTINGNOTE) {
-                Note returnedNote = (Note)data.getExtras().getSerializable(EditNoteActivity.NOTE);
-                currentNote.setSubject(returnedNote.getSubject());
-                currentNote.setContent(returnedNote.getContent());
-            } else if (requestCode == NEWNOTE) {
-                notesList.add((Note)data.getExtras().getSerializable(EditNoteActivity.NOTE));
+
+        if (resultCode == RESULT_OK) {
+
+            // Make sure the data was received ok
+            if (data != null && data.getExtras() != null && data.getExtras().containsKey(EditNoteActivity.NOTE)) {
+
+                // If we are coming back on an existing note
+                switch (requestCode) {
+                    case EXISTING_NOTE:
+                        Note returnedNote = (Note) data.getExtras().getSerializable(EditNoteActivity.NOTE);
+                        if (returnedNote != null) {
+                            mCurrentNote.setSubject(returnedNote.getSubject());
+                            mCurrentNote.setContent(returnedNote.getContent());
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        break;
+                    case NEW_NOTE:
+                        mAdapter.add((Note) data.getExtras().getSerializable(EditNoteActivity.NOTE));
+                        break;
+                }
+            } else {
+                throw new IllegalArgumentException("The activity didn't return the expected intent arguments, did you forget to 'setResult'?");
             }
-        adapter.notifyDataSetChanged();
         }
     }
 
     private void initArrayWithSomething() {
-        notesList.add(new Note("first Title", "first Content"));
-        notesList.add(new Note("second Title", "second Content"));
-        notesList.add(new Note("third Title", "third Content"));
+        mNotesList.add(new Note("first Title", "first Content"));
+        mNotesList.add(new Note("second Title", "second Content"));
+        mNotesList.add(new Note("third Title", "third Content"));
+        mNotesList.add(new Note("first Title", "first Content"));
+        mNotesList.add(new Note("second Title", "second Content"));
+        mNotesList.add(new Note("third Title", "third Content"));
+        mNotesList.add(new Note("first Title", "first Content"));
+        mNotesList.add(new Note("second Title", "second Content"));
+        mNotesList.add(new Note("third Title", "third Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+        mNotesList.add(new Note("first Title", "first Content"));
+        mNotesList.add(new Note("second Title", "second Content"));
+        mNotesList.add(new Note("third Title", "third Content"));
     }
-
 }
