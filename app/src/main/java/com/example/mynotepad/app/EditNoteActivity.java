@@ -4,17 +4,27 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
 public class EditNoteActivity extends ActionBarActivity {
+    EditText editSubject;
+    EditText editContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
         NotepadApplication notepadApplication = (NotepadApplication) getApplication();
-        Toast.makeText(this, String.format("Opened"), Toast.LENGTH_LONG).show();
+        int i = getIntent().getExtras().getInt("index");
+        Note note = notepadApplication.notesList.get(i);
+        editSubject = (EditText) findViewById(R.id.editSubject);
+        editContent = (EditText) findViewById(R.id.editContent);
+        editSubject.setText(note.getSubject());
+        editContent.setText(note.getContent());
+
+        Toast.makeText(this, String.format("Subject: %s, Content: %s",note.getSubject(),note.getContent()), Toast.LENGTH_LONG).show();
     }
 
 

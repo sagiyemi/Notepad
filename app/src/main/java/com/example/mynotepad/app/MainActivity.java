@@ -27,10 +27,8 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_list);
 
-        notesList = new ArrayList<Note>();
-        notesList.add(new Note("first Title", "first Content"));
-        notesList.add(new Note("second Title", "second Content"));
-        notesList.add(new Note("third Title", "third Content"));
+        NotepadApplication notepadApplication = (NotepadApplication)getApplication();
+        notesList = notepadApplication.notesList;
 
         NoteAdapter adapter = new NoteAdapter(this, R.layout.title_row,notesList);
         this.setListAdapter(adapter);
