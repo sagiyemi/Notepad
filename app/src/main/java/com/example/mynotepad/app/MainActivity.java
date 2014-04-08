@@ -1,21 +1,26 @@
 package com.example.mynotepad.app;
 
+import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.ListActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends ListActivity implements AdapterView.OnItemClickListener {
     ArrayList<Note> notesList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,8 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemClic
         notesList.add(new Note("first Title", "first Content"));
         notesList.add(new Note("second Title", "second Content"));
         notesList.add(new Note("third Title", "third Content"));
-        ListAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, notesList);
+
+        NoteAdapter adapter = new NoteAdapter(this, R.layout.title_row,notesList);
         this.setListAdapter(adapter);
 
         ListView notesListView = getListView();
@@ -57,6 +63,13 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        String subject = notesList.get(i).getSubject();
+        String content = notesList.get(i).getContent();
+        Toast.makeText(this, String.format("Subject: %s, Content: %s", subject,content), Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
+        intent.putExtra("index", i);
+        startActivity(intent);
 
     }
 }
