@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">הנוטפד שלי</string>
+    <string name="hello_world">שלום עולם!</string>
+    <string name="action_settings">הגדרות</string>
+    <string name="note_application">אפליקציית פתקים</string>
+    <string name="title_activity_edit_note">עריכת פתק</string>
+    <string name="cancel">בטל</string>
+    <string name="save">שמור</string>
+    <string name="note_subject">נושא פתק</string>
+    <string name="note_content">תוכן פתק</string>
+
+</resources>

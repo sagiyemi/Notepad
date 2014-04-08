@@ -1,48 +1,42 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.mynotepad.app.EditNoteActivity">
+    android:layout_height="match_parent">
 
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editSubject"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Some Subject" />
+        android:layout_gravity="">
+
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:id="@+id/cancelButton" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:id="@+id/saveButton" />
+    </LinearLayout>
 
     <EditText
+        android:hint="@string/note_subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editSubject" />
+
+    <EditText
+        android:hint="@string/note_content"
         android:gravity="top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editContent"
-        android:layout_below="@+id/editSubject"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="Some Text \nAnd more text" />
+        android:id="@+id/editContent" />
 
-    <Button
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Left Button"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Right Button"
-        android:id="@+id/button2"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/button" />
-
-</RelativeLayout>
+</LinearLayout>

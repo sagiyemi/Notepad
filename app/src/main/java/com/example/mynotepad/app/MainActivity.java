@@ -1,73 +1,54 @@
 package com.example.mynotepad.app;
 
-import android.content.Intent;
-import android.database.DataSetObserver;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends ListActivity implements AdapterView.OnItemClickListener {
-    ArrayList<Note> notesList;
+public class MainActivity extends ListActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+    private ArrayList<Note> notesList;
+    private Button addNewNoteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_list);
 
-        NotepadApplication notepadApplication = (NotepadApplication)getApplication();
-        notesList = notepadApplication.notesList;
-
-        NoteAdapter adapter = new NoteAdapter(this, R.layout.title_row,notesList);
-        this.setListAdapter(adapter);
+        NotepadApplication notepadApplication = (NotepadApplication) getApplication();
+        notesList = notepadApplication.getNotesList();
 
         ListView notesListView = getListView();
         notesListView.setOnItemClickListener(this);
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        addNewNoteButton = (Button) findViewById(R.id.addNewNoteButton);
+        addNewNoteButton.setOnClickListener(this);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onResume() {
+        super.onResume();
+        setListAdapter(new NoteAdapter(this, R.layout.title_row, notesList));
     }
 
+    // click on one of the notes
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        String subject = notesList.get(i).getSubject();
-        String content = notesList.get(i).getContent();
-        Toast.makeText(this, String.format("Subject: %s, Content: %s", subject,content), Toast.LENGTH_LONG).show();
-
         Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
         intent.putExtra("index", i);
         startActivity(intent);
+    }
 
+    // click on add new note button
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
+        intent.putExtra("index", NotepadApplication.NEWNOTE);
+        startActivity(intent);
     }
 }

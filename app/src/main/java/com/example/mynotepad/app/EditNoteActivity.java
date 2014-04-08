@@ -1,51 +1,62 @@
 package com.example.mynotepad.app;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
-public class EditNoteActivity extends ActionBarActivity {
-    EditText editSubject;
-    EditText editContent;
+public class EditNoteActivity extends ActionBarActivity implements View.OnClickListener {
+    private EditText editSubject;
+    private EditText editContent;
+    private int noteIndex;
+    private boolean isNewNote = false;
+    private Button saveButton;
+    private Button cancelButton;
+    private NotepadApplication notepadApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
-        NotepadApplication notepadApplication = (NotepadApplication) getApplication();
-        int i = getIntent().getExtras().getInt("index");
-        Note note = notepadApplication.notesList.get(i);
+
         editSubject = (EditText) findViewById(R.id.editSubject);
         editContent = (EditText) findViewById(R.id.editContent);
-        editSubject.setText(note.getSubject());
-        editContent.setText(note.getContent());
+        saveButton = (Button) findViewById(R.id.saveButton);
+        cancelButton = (Button) findViewById(R.id.cancelButton);
+        saveButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
 
-        Toast.makeText(this, String.format("Subject: %s, Content: %s",note.getSubject(),note.getContent()), Toast.LENGTH_LONG).show();
-    }
+        notepadApplication = (NotepadApplication) getApplication();
+        noteIndex = getIntent().getExtras().getInt("index");
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.edit_note, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (noteIndex == NotepadApplication.NEWNOTE) {
+            isNewNote = true;
+        } else {
+            Note note = notepadApplication.getNotesList().get(noteIndex);
+            editSubject.setText(note.getSubject());
+            editContent.setText(note.getContent());
         }
-        return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.saveButton:
+                if (isNewNote) {
+                    notepadApplication.addNewNote(editSubject.getText().toString(), editContent.getText().toString());
+                } else {
+                    notepadApplication.updateNote(noteIndex, editSubject.getText().toString(), editContent.getText().toString());
+                }
+                break;
+            case R.id.cancelButton:
+                // do nothing, simply go back
+                break;
+            default:
+                break;
+        }
+        finish();
+    }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mi block de notas</string>
+    <string name="hello_world">Hola Mundo!</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="note_application">Aplicacion de notas</string>
+    <string name="title_activity_edit_note">Editar Nota</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Guardar</string>
+    <string name="note_subject">Note Subject</string>
+    <string name="note_content">Note Content</string>
+
+</resources>
