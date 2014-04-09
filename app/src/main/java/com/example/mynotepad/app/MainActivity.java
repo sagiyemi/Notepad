@@ -1,17 +1,19 @@
 package com.example.mynotepad.app;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends ListActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
     private final int EXISTING_NOTE = 1;
     private final int NEW_NOTE = 2;
 
@@ -22,13 +24,15 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_grid_layout);
 
         mNotesList = new ArrayList<Note>();
         initArrayWithSomething();
 
-        ListView notesListView = getListView();
-        notesListView.setOnItemClickListener(this);
+        GridView notesView = (GridView) findViewById(R.id.gridView);
+//        ListView notesView = (ListView) findViewById(android.R.id.list);
+        notesView.setOnItemClickListener(this);
 
         Button addNewNoteButton = (Button) findViewById(R.id.activity_main_plus);
         addNewNoteButton.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +45,7 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemClic
         });
 
         mAdapter = new NoteAdapter(this, R.layout.item_list_note, mNotesList);
-        setListAdapter(mAdapter);
+        notesView.setAdapter(mAdapter);
     }
 
     @Override
@@ -88,24 +92,24 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemClic
         mNotesList.add(new Note("first Title", "first Content"));
         mNotesList.add(new Note("second Title", "second Content"));
         mNotesList.add(new Note("third Title", "third Content"));
-//        mNotesList.add(new Note("first Title", "first Content"));
-//        mNotesList.add(new Note("second Title", "second Content"));
-//        mNotesList.add(new Note("third Title", "third Content"));
-//        mNotesList.add(new Note("first Title", "first Content"));
-//        mNotesList.add(new Note("second Title", "second Content"));
-//        mNotesList.add(new Note("third Title", "third Content"));
-//        mNotesList.add(new Note("first Title", "first Content"));
-//        mNotesList.add(new Note("second Title", "second Content"));
-//        mNotesList.add(new Note("first Title", "first Content"));
-//        mNotesList.add(new Note("second Title", "second Content"));
-//        mNotesList.add(new Note("first Title", "first Content"));
-//        mNotesList.add(new Note("second Title", "second Content"));
-//        mNotesList.add(new Note("first Title", "first Content"));
-//        mNotesList.add(new Note("second Title", "second Content"));
-//        mNotesList.add(new Note("first Title", "first Content"));
-//        mNotesList.add(new Note("second Title", "second Content"));
         mNotesList.add(new Note("first Title", "first Content"));
         mNotesList.add(new Note("second Title", "second Content"));
         mNotesList.add(new Note("third Title", "third Content"));
+        mNotesList.add(new Note("first Title", "first Content"));
+        mNotesList.add(new Note("second Title", "second Content"));
+        mNotesList.add(new Note("third Title", "third Content"));
+        mNotesList.add(new Note("first Title", "first Content"));
+        mNotesList.add(new Note("second Title", "second Content"));
+        mNotesList.add(new Note("first Title", "first Content"));
+        mNotesList.add(new Note("second Title", "second Content"));
+        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("first Title", "first Content"));
+//        mNotesList.add(new Note("second Title", "second Content"));
+//        mNotesList.add(new Note("third Title", "third Content"));
     }
 }

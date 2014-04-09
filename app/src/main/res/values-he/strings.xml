@@ -4,7 +4,6 @@
     <string name="app_name">הנוטפד שלי</string>
     <string name="hello_world">שלום עולם!</string>
     <string name="action_settings">הגדרות</string>
-    <string name="note_application">אפליקציית פתקים</string>
     <string name="title_activity_edit_note">עריכת פתק</string>
     <string name="cancel">בטל</string>
     <string name="save">שמור</string>
