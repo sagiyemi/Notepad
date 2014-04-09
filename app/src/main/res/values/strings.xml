@@ -9,5 +9,6 @@
     <string name="note_subject">Enter header here dsfg dsgsd gs </string>
     <string name="note_content">Note Content</string>
     <string name="plus_sign">+</string>
+    <string name="action_switch_layout">Switch Layout</string>
 
 </resources>

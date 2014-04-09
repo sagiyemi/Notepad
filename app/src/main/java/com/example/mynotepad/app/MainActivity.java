@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,10 +19,14 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
     private final int EXISTING_NOTE = 1;
     private final int NEW_NOTE = 2;
+    private final int LAYOUT_ORIENTATION_LIST = 1;
+    private final int LAYOUT_ORIENTATION_GRID = -1;
 
     private ArrayList<Note> mNotesList;
     private NoteAdapter mAdapter;
     private Note mCurrentNote;
+    private GridView mNotesView;
+    private int mLayoutOrientation = LAYOUT_ORIENTATION_LIST;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +37,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mNotesList = new ArrayList<Note>();
         initArrayWithSomething();
 
-        GridView notesView = (GridView) findViewById(R.id.gridView);
+        mNotesView = (GridView) findViewById(R.id.gridView);
 //        ListView notesView = (ListView) findViewById(android.R.id.list);
-        notesView.setOnItemClickListener(this);
+        mNotesView.setOnItemClickListener(this);
 
         Button addNewNoteButton = (Button) findViewById(R.id.activity_main_plus);
         addNewNoteButton.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +52,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         });
 
         mAdapter = new NoteAdapter(this, R.layout.item_list_note, mNotesList);
-        notesView.setAdapter(mAdapter);
+        mNotesView.setAdapter(mAdapter);
     }
 
     @Override
@@ -111,5 +118,29 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //        mNotesList.add(new Note("first Title", "first Content"));
 //        mNotesList.add(new Note("second Title", "second Content"));
 //        mNotesList.add(new Note("third Title", "third Content"));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_switch_layout:
+                if (mLayoutOrientation == LAYOUT_ORIENTATION_LIST) {
+                    mNotesView.setNumColumns(GridView.AUTO_FIT);
+                } else {
+                    mNotesView.setNumColumns(1);
+                }
+                mLayoutOrientation *= -1;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
